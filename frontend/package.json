@@ -38,6 +38,7 @@
     "apexcharts": "^3.43.0",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.10",
+    "eslint": "^8.57.0",
     "framer-motion": "^11.0.8",
     "history": "^5.3.0",
     "js-cookie": "^3.0.5",
@@ -57,7 +58,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react-swc": "^3.4.0",
-    "eslint": "^8.51.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.0.0",
     "eslint-import-resolver-alias": "^1.1.2",

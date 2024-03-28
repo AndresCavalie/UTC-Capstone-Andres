@@ -28,6 +28,11 @@ import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 import Cookies from 'js-cookie';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import dayjs from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { Autocomplete } from '@mui/material';
 
 export default function PatientsView() {
     const [page, setPage] = useState(0);
@@ -234,6 +239,7 @@ function PatientForm({ onComplete }) {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [injury, setInjury] = useState('');
+    const [email, setEmail] = useState('');
     const [gender, setGender] = useState('');
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
@@ -241,7 +247,95 @@ function PatientForm({ onComplete }) {
     const [state, setState] = useState('');
     const [country, setCountry] = useState('');
     const [workPhone, setWorkPhone] = useState('');
+    const [birthdate, SetBirthdate] = useState('');
     const [medicalHistory, setMedicalHistory] = useState('');
+    const [newPatientForm, setNewPatientForm] = useState({
+        FirstName:'',
+        LastName: '',
+        Birthdate:'',
+        Email: '',
+        Injury:'',
+        Gender:'',
+        PhoneNumber:'',
+        Address: '',
+        State: '',
+        City: '',
+        ZipCode: '',
+        Country: '',
+        MedicalHistoryNotes:'',
+    })
+
+    const states = [
+        'AL', // Alabama
+        'AK', // Alaska
+        'AZ', // Arizona
+        'AR', // Arkansas
+        'CA', // California
+        'CO', // Colorado
+        'CT', // Connecticut
+        'DE', // Delaware
+        'FL', // Florida
+        'GA', // Georgia
+        'HI', // Hawaii
+        'ID', // Idaho
+        'IL', // Illinois
+        'IN', // Indiana
+        'IA', // Iowa
+        'KS', // Kansas
+        'KY', // Kentucky
+        'LA', // Louisiana
+        'ME', // Maine
+        'MD', // Maryland
+        'MA', // Massachusetts
+        'MI', // Michigan
+        'MN', // Minnesota
+        'MS', // Mississippi
+        'MO', // Missouri
+        'MT', // Montana
+        'NE', // Nebraska
+        'NV', // Nevada
+        'NH', // New Hampshire
+        'NJ', // New Jersey
+        'NM', // New Mexico
+        'NY', // New York
+        'NC', // North Carolina
+        'ND', // North Dakota
+        'OH', // Ohio
+        'OK', // Oklahoma
+        'OR', // Oregon
+        'PA', // Pennsylvania
+        'RI', // Rhode Island
+        'SC', // South Carolina
+        'SD', // South Dakota
+        'TN', // Tennessee
+        'TX', // Texas
+        'UT', // Utah
+        'VT', // Vermont
+        'VA', // Virginia
+        'WA', // Washington
+        'WV', // West Virginia
+        'WI', // Wisconsin
+        'WY', // Wyoming
+        'OTHER',
+    ];
+
+    const handleClickSubmit = () => {
+        console.log(newPatientForm);
+        const NewPatientInfo = newPatientForm
+        const cookieValue = Cookies.get('JwtToken');
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${cookieValue}` },
+            body: JSON.stringify(NewPatientInfo)
+        };
+        
+        fetch('/api/patients', requestOptions)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+
+            });
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -256,90 +350,111 @@ function PatientForm({ onComplete }) {
     return (
         <Container>
             <h1>New Patient Form</h1>
-            <form onSubmit={handleSubmit}>
                 <TextField
                     label="First Name"
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
+                    value={newPatientForm.FirstName}
+                    onChange={(e) => setNewPatientForm({...newPatientForm, FirstName: e.target.value})}
                 />
                 <TextField
                     label="Last Name"
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
+                    value={newPatientForm.LastName}
+                    onChange={(e) => setNewPatientForm({...newPatientForm, LastName: e.target.value})}
+                />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['DatePicker']}>
+                        <DatePicker
+                            size="small"
+                            label="Birthday"
+                            onChange={(value) => setNewPatientForm({...newPatientForm, Birthdate: value.$d})}
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+                <TextField
+                    label="Email"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={newPatientForm.Email}
+                    onChange={(e) => setNewPatientForm({...newPatientForm, Email: e.target.value})}
                 />
                 <TextField
                     label="Injury"
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={injury}
-                    onChange={(e) => setInjury(e.target.value)}
+                    value={newPatientForm.Injury}
+                    onChange={(e) => setNewPatientForm({...newPatientForm, Injury: e.target.value})}
                 />
                 <FormControl fullWidth variant="outlined" margin="normal">
                     <InputLabel>Gender</InputLabel>
                     <Select
-                        value={gender}
-                        onChange={(e) => setGender(e.target.value)}
+                        value={newPatientForm.Gender}
+                        onChange={(e) => setNewPatientForm({...newPatientForm, Gender: e.target.value})}
                         label="Gender"
                     >
-                        <MenuItem value="male">Male</MenuItem>
-                        <MenuItem value="female">Female</MenuItem>
+                        <MenuItem value="M">Male</MenuItem>
+                        <MenuItem value="F">Female</MenuItem>
+                        <MenuItem value="X">Other</MenuItem>
                     </Select>
                 </FormControl>
+                <TextField
+                    label="Phone"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={newPatientForm.PhoneNumber}
+                    onChange={(e) => setNewPatientForm({...newPatientForm, PhoneNumber: e.target.value})}
+                />
                 <TextField
                     label="Address"
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
+                    value={newPatientForm.Address}
+                    onChange={(e) => setNewPatientForm({...newPatientForm, Address: e.target.value})}
                 />
                 <TextField
                     label="City"
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
+                    value={newPatientForm.City}
+                    onChange={(e) => setNewPatientForm({...newPatientForm, City: e.target.value})}
                 />
                 <TextField
                     label="Postal Code"
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={postalCode}
-                    onChange={(e) => setPostalCode(e.target.value)}
+                    value={newPatientForm.ZipCode}
+                    onChange={(e) => setNewPatientForm({...newPatientForm, ZipCode: e.target.value})}
                 />
-                <TextField
-                    label="State"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
+                <Autocomplete
+                    value={newPatientForm.State}
+                    onChange={(event, newValue) => {
+                        setNewPatientForm({...newPatientForm, State: newValue})
+                      }}
+                    options={states}
+                    renderInput={(params) => <TextField {...params} label="State" />}
                 />
-                <TextField
-                    label="Country"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                />
-                <TextField
-                    label="Work Phone"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={workPhone}
-                    onChange={(e) => setWorkPhone(e.target.value)}
-                />
+                <FormControl fullWidth variant="outlined" margin="normal">
+                    <InputLabel>Country</InputLabel>
+                    <Select
+                        value={newPatientForm.Country}
+                        onChange={(e) => setNewPatientForm({...newPatientForm, Country: e.target.value})}
+                        label="Country"
+                    >
+                        <MenuItem value="USA">USA</MenuItem>
+                        <MenuItem value="Other">Other</MenuItem>
+                    </Select>
+                </FormControl>
+               
                 <TextField
                     label="Medical History"
                     variant="outlined"
@@ -347,18 +462,19 @@ function PatientForm({ onComplete }) {
                     margin="normal"
                     multiline
                     rows={4}
-                    value={medicalHistory}
-                    onChange={(e) => setMedicalHistory(e.target.value)}
+                    value={newPatientForm.MedicalHistoryNotes}
+                    onChange={(e) => setNewPatientForm({...newPatientForm, MedicalHistoryNotes: e.target.value})}
                 />
                 <Button
                     variant="contained"
                     color="inherit"
                     startIcon={<Iconify icon="eva:plus-fill" />}
                     type="submit"
+                    onClick={() => handleClickSubmit()}
                 >
                     Complete
                 </Button>
-            </form>
+
         </Container>
     );
 }
