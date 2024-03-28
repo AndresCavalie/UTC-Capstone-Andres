@@ -59,7 +59,7 @@ function NewAppointment() {
     return (
         <Container>
             <form onSubmit={handleSubmit}>
-                <Typography variant="h6">Patient Information</Typography>
+                <Typography variant="h6">Patient</Typography>
                 <Divider />
                 {/* Patient Information Fields */}
                 <Grid container spacing={2} p={2}>
@@ -72,48 +72,10 @@ function NewAppointment() {
                             fullWidth
                         />
                     </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            label="Last Name"
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
-                            required
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            label="Email Address"
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            label="Contact Phone Number"
-                            type="tel"
-                            value={phoneNumber}
-                            onChange={(e) => setPhoneNumber(e.target.value)}
-                            required
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <DatePicker
-                            label="Birth Date"
-                            value={birthDate}
-                            onChange={(date) => setBirthDate(date)}
-                            renderInput={(params) => <TextField {...params} />}
-                            required
-                            fullWidth
-                        />
-                    </Grid>
+                    
                 </Grid>
 
-                <Typography variant="h6">Therapist Information</Typography>
+                <Typography variant="h6">Therapist</Typography>
                 <Divider />
                 {/* Therapist Information Fields */}
                 <Grid container spacing={2} p={2}>
@@ -126,35 +88,7 @@ function NewAppointment() {
                             fullWidth
                         />
                     </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            label="Therapist Last Name"
-                            value={therapistLastName}
-                            onChange={(e) => setTherapistLastName(e.target.value)}
-                            required
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            label="Therapist Email Address"
-                            type="email"
-                            value={therapistEmail}
-                            onChange={(e) => setTherapistEmail(e.target.value)}
-                            required
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            label="Therapist Contact Phone Number"
-                            type="tel"
-                            value={therapistPhoneNumber}
-                            onChange={(e) => setTherapistPhoneNumber(e.target.value)}
-                            required
-                            fullWidth
-                        />
-                    </Grid>
+                   
                 </Grid>
 
                 {/* Additional Form Fields (Date, Time, Insurance Card Image, Signature, etc.) */}

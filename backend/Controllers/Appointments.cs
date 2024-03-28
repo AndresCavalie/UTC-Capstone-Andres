@@ -142,8 +142,72 @@ namespace WebApiJobSearch.Controllers
 
 
             };
+            _context.GetRiteAppointments.Add(NewAppointment);
+            _context.SaveChanges();
+
             return Ok(new { res = user, app = NewAppointment });
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+
+            var appointment = _context.GetRiteAppointments.Find(id);
+            if (appointment == null)
+            {
+                return NotFound();
+            }
+
+            _context.GetRiteAppointments.Remove(appointment);
+            _context.SaveChanges();
+
+            return Ok(new { response = "hello" });
+        }
+
+        [HttpDelete("{Aid}/note/{Nid}")]
+        public IActionResult Delete(int Aid, int Nid)
+        {
+
+            var appointment = _context.GetRiteAppointments.Find(Aid);
+
+            if (appointment == null)
+            {
+                return NotFound();
+            }
+            
+            //_context.SaveChanges();
+            return Ok(new { workout = appointment });
+        }
+
+        //[HttpPut("{id}/note/{Nid}")]
+        //public async Task<IActionResult> EditNote(int id, int Nid)
+        //{
+        //    if (id != todoItemDTO.Id)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    var todoItem = await _context.TodoItems.FindAsync(id);
+        //    if (todoItem == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    todoItem.Name = todoItemDTO.Name;
+        //    todoItem.IsComplete = todoItemDTO.IsComplete;
+
+
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException) when (!TodoItemExists(id))
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return NoContent();
+        //}
         private JwtUserInfo GetCurrentUser()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
