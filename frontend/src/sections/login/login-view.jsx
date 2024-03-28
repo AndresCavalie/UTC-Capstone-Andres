@@ -47,7 +47,7 @@ export default function LoginView() {
             credentials: 'same-origin',
             body: JSON.stringify({ ...formData, id: 0 }),
         };
-        fetch('https://localhost:7031/api/getRiteLogin', requestOptions)
+        fetch('/api/getRiteLogin', requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);

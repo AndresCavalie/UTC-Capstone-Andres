@@ -28,7 +28,11 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api':'http://127.0.0.1:5000/'
+      '/api': {
+        target: 'https://webapijobsearch.azurewebsites.net',
+        changeOrigin: true,
+        secure: false
+      }
     },
     port: 3030,
   },
