@@ -71,7 +71,7 @@ export default function NewAppointmentModal() {
             body: JSON.stringify(appointment)
         };
         
-        fetch('https://localhost:7031/api/appointments', requestOptions)
+        fetch('/api/appointments', requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);

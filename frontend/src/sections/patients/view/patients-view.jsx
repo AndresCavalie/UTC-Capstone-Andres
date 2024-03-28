@@ -108,7 +108,7 @@ export default function PatientsView() {
             method: 'GET',
             headers: { Authorization: `Bearer ${cookieValue}` },
         };
-        fetch(`https://localhost:7031/api/patients`, requestOptions)
+        fetch(`/api/patients`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 data.forEach((patient) => {

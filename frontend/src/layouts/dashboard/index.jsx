@@ -21,7 +21,7 @@ export default function DashboardLayout({ children }) {
             method: 'GET',
             headers: { Authorization: `Bearer ${cookieValue}` },
         };
-        fetch('https://localhost:7031/api/getRiteLogin/loggedIn', requestOptions)
+        fetch('/api/getRiteLogin/loggedIn', requestOptions)
             .then((response) => {
                 if (!response.ok) {
                     navigate('/login');

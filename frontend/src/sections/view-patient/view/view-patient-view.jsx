@@ -64,7 +64,7 @@ export default function ViewPatientView() {
             method: 'GET',
             headers: { Authorization: `Bearer ${cookieValue}` },
         };
-        fetch(`https://localhost:7031/api/appointments/patient/${id}`, requestOptions)
+        fetch(`/api/appointments/patient/${id}`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 data.forEach((appointment) => {
@@ -82,7 +82,7 @@ export default function ViewPatientView() {
             method: 'GET',
             headers: { Authorization: `Bearer ${cookieValue}` },
         };
-        fetch(`https://localhost:7031/api/appointments/${id}`, requestOptions)
+        fetch(`/api/appointments/${id}`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 console.log(data[0]);
@@ -98,7 +98,7 @@ export default function ViewPatientView() {
             method: 'GET',
             headers: { Authorization: `Bearer ${cookieValue}` },
         };
-        fetch(`https://localhost:7031/api/patients/${id}`, requestOptions)
+        fetch(`/api/patients/${id}`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 const dateObj = new Date(data[0].birthdate);

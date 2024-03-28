@@ -25,7 +25,7 @@ export default function MiniExerciseView({handleAddExercise}) {
             headers: { Authorization: `Bearer ${cookieValue}` },
         };
         fetch(
-            `https://localhost:7031/api/exercises?name=${searchValue}&bodyPart=${bodyPartValue == 'All' ? '' : bodyPartValue}`,
+            `/api/exercises?name=${searchValue}&bodyPart=${bodyPartValue == 'All' ? '' : bodyPartValue}`,
             requestOptions
         )
             .then((response) => response.json())
@@ -42,7 +42,7 @@ export default function MiniExerciseView({handleAddExercise}) {
             method: 'GET',
             headers: { Authorization: `Bearer ${cookieValue}` },
         };
-        fetch(`https://localhost:7031/api/exercises/bodyParts?`, requestOptions)
+        fetch(`/api/exercises/bodyParts?`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 setBodyParts(data);

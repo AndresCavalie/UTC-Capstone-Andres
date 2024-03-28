@@ -61,7 +61,7 @@ export default function WorkoutsView() {
             method: 'GET',
             headers: { Authorization: `Bearer ${cookieValue}` },
         };
-        fetch(`https://localhost:7031/api/workouts?description=${searchValue}`, requestOptions)
+        fetch(`/api/workouts?description=${searchValue}`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 setWorkouts(data);
@@ -74,7 +74,7 @@ export default function WorkoutsView() {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${cookieValue}` },
         };
-        fetch(`https://localhost:7031/api/workouts/${Wid}/exercise/${Eid}`, requestOptions)
+        fetch(`/api/workouts/${Wid}/exercise/${Eid}`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 getWorkoutById(selectedWorkout.id);
@@ -88,7 +88,7 @@ export default function WorkoutsView() {
             method: 'POST',
             headers: { Authorization: `Bearer ${cookieValue}` },
         };
-        fetch(`https://localhost:7031/api/workouts/${Wid}/exercise/${Eid}`, requestOptions)
+        fetch(`/api/workouts/${Wid}/exercise/${Eid}`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 getWorkoutById(selectedWorkout.id);
@@ -103,7 +103,7 @@ export default function WorkoutsView() {
             method: 'GET',
             headers: { Authorization: `Bearer ${cookieValue}` },
         };
-        fetch(`https://localhost:7031/api/workouts/${id}`, requestOptions)
+        fetch(`/api/workouts/${id}`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 setSelectedWorkout(data[0]);

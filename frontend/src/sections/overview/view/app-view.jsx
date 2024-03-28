@@ -33,7 +33,7 @@ export default function AppView() {
             method: 'GET',
             headers: { Authorization: `Bearer ${cookieValue}` },
         };
-        fetch('https://localhost:7031/api/appointments/office', requestOptions)
+        fetch('/api/appointments/office', requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);
@@ -76,7 +76,7 @@ export default function AppView() {
             method: 'GET',
             headers: { Authorization: `Bearer ${cookieValue}` },
         };
-        fetch(`https://localhost:7031/api/appointments/${id}`, requestOptions)
+        fetch(`/api/appointments/${id}`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 console.log(data[0]);

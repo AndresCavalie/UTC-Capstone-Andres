@@ -61,7 +61,7 @@ export default function SettingsView() {
             method: 'GET',
             headers: { Authorization: `Bearer ${cookieValue}` },
         };
-        fetch(`https://localhost:7031/api/offices`, requestOptions)
+        fetch(`/api/offices`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 setOfficeInfo(data[0]);

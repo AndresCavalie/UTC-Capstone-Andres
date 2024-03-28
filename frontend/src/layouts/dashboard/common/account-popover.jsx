@@ -62,7 +62,7 @@ export default function AccountPopover() {
             method: 'GET',
             headers: { Authorization: `Bearer ${cookieValue}` },
         };
-        fetch('https://localhost:7031/api/getRiteLogin', requestOptions)
+        fetch('/api/getRiteLogin', requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);
