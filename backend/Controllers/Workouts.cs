@@ -63,6 +63,22 @@ namespace WebApiJobSearch.Controllers
             return Ok(workoutQ);
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+
+            var workout = _context.GetRiteWorkouts.Find(id);
+            if (workout == null)
+            {
+                return NotFound();
+            }
+        
+           
+            _context.GetRiteWorkouts.Remove(workout);
+            _context.SaveChanges();
+            return Ok(new {workout= "good" });
+        }
+
         [HttpDelete("{Wid}/exercise/{Eid}")]
         public IActionResult Delete(int Wid, int Eid)
         {

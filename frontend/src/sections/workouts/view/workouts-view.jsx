@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-import { Box, Modal, Paper, Button } from '@mui/material';
+import { Box, Modal, Paper, Button, IconButton } from '@mui/material';
 import { TextField } from '@mui/material';
 
 import { posts } from 'src/_mock/blog';
@@ -15,6 +15,9 @@ import PostSearch from '../post-search';
 import ExerciseItem from '../exercise-item';
 import MiniExerciseView from '../mini-exercise-view';
 import Cookies from 'js-cookie';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // ----------------------------------------------------------------------
 
 export default function WorkoutsView() {
@@ -27,10 +30,30 @@ export default function WorkoutsView() {
         const [bodyPartValue, setbodyPartValue] = useState('All Body Parts');
         const [bodyParts, setBodyParts] = useState([]);
 
+        function removeWorkout(id) {
+            const cookieValue = Cookies.get('JwtToken');
+            const requestOptions = {
+                method: 'DELETE',
+                headers: { Authorization: `Bearer ${cookieValue}` },
+            };
+            fetch(`/api/workouts/${id}`, requestOptions)
+                .then((response) => response.json())
+                .then((data) => {
+                    getWorkouts();
+                    setOpen(false);
+                    
+                });
+        }
+
         const handleAddNewWorkout = () => {
             setOpenNewWorkoutModal(true);
         };
-    
+        
+        const deleteWorkout = (id) => {
+            removeWorkout(id);
+            
+        }
+
         const handleSaveNewWorkout = () => {
             // Logic to save the new workout 
             console.log("hello")
@@ -55,6 +78,8 @@ export default function WorkoutsView() {
                 .then((response) => response.json())
                 .then((data) => {
                     console.log(data);
+                    getWorkouts();
+                    setOpenNewWorkoutModal(false);
     
                 });
             // onComplete();
@@ -292,10 +317,15 @@ export default function WorkoutsView() {
                                 ''
                             ) : (
                                 <>
-                                    <Typography variant="h4">
-                                        {selectedWorkout.description}
-                                    </Typography>
-                                    <Stack sx={{ width: 500 }} mt={2}>
+                                    <Stack direction="row" justifyContent='space-between'>
+                                        <Typography variant="h4">
+                                            {selectedWorkout.description} 
+                                        </Typography>
+                                        <IconButton onClick={() => deleteWorkout(selectedWorkout.id)}>
+                                            <FontAwesomeIcon icon={faTrash} size="xs" />
+                                        </IconButton>
+                                    </Stack>
+                                    <Stack sx={{ width: 500 }} mt={2} px={2}>
                                         {selectedWorkout.exercises.map((ex, i) => (
                                             <ExerciseItem
                                                 key={ex.id}
