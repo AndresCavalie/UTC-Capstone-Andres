@@ -1,6 +1,6 @@
 import { faEllipsis, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Box, Button, IconButton, MenuItem, Popover, Stack, Typography } from '@mui/material';
+import { Box, Button, IconButton, MenuItem, Popover, Stack, Typography, Modal, TextField} from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import { useState } from 'react';
 
@@ -15,11 +15,80 @@ export default function ReadPatientView({ setEditState, officeInfo }) {
         setOpen(null);
     };
 
+    const [isModalOpen, setModalOpen] = useState(false);
+
+    const handleOpenModal = () => {
+        setModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setModalOpen(false);
+    };
+
+
+    
     return (
         <>
+        <Modal
+    open={isModalOpen}
+    onClose={handleCloseModal}
+    aria-labelledby="invite-physician-modal"
+    aria-describedby="invite-physician-modal-description"
+>
+    <Box sx={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        boxShadow: 24,
+        p: 4,
+        borderRadius: 2,
+    }}>
+        <Typography id="invite-physician-modal" variant="h6" component="h2">
+            Invite Physician
+        </Typography>
+        <Box component="form" noValidate autoComplete="off" sx={{ mt: 2 }}>
+            <TextField
+                fullWidth
+                label="First Name"
+                variant="outlined"
+                sx={{ mb: 2 }}
+            />
+            <TextField
+                fullWidth
+                label="Last Name"
+                variant="outlined"
+                sx={{ mb: 2 }}
+            />
+            <TextField
+                fullWidth
+                label="Email"
+                variant="outlined"
+                sx={{ mb: 2 }}
+            />
+            <TextField
+                fullWidth
+                label="Set User Name"
+                variant="outlined"
+                sx={{ mb: 2 }}
+            />
+            <TextField
+                fullWidth
+                label="Set Password"
+                variant="outlined"
+                sx={{ mb: 2 }}
+            />
+            <Button variant="contained" onClick={handleCloseModal}>
+                Send Invitation
+            </Button>
+        </Box>
+    </Box>
+</Modal>
             <Stack direction="row" justifyContent="space-between">
                 <Typography variant="h6">Physicians</Typography>
-                <Button sx={{ p: '1px', px: 1 }}>Invite Physician</Button>
+                <Button onClick={handleOpenModal} sx={{ p: '1px', px: 1 }}>Invite Physician</Button>
             </Stack>
             <Stack spacing={1} mt={2}>
                 {officeInfo.physicians.map((phys, i) => (

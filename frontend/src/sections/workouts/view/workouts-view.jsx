@@ -103,7 +103,7 @@ export default function WorkoutsView() {
         removeExercise(selectedWorkout.id,Eid)
         
   
-        //call to populate the selectedWorkoutagain
+        // call to populate the selectedWorkoutagain
     }
 
     function handleAddExercise(Eid){
@@ -112,7 +112,7 @@ export default function WorkoutsView() {
         addExercise(selectedWorkout.id,Eid)
         
   
-        //call to populate the selectedWorkoutagain
+        // call to populate the selectedWorkoutagain
     }
     const handleClickOpen = () => {
         setOpen(true);
