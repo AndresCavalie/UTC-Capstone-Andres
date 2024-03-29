@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-import { Box, Modal, Paper, Button } from '@mui/material';
+import { Box, Modal, Paper, Button, IconButton } from '@mui/material';
 import { TextField } from '@mui/material';
 
 import { posts } from 'src/_mock/blog';
@@ -15,6 +15,9 @@ import PostSearch from '../post-search';
 import ExerciseItem from '../exercise-item';
 import MiniExerciseView from '../mini-exercise-view';
 import Cookies from 'js-cookie';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // ----------------------------------------------------------------------
 
 export default function WorkoutsView() {
@@ -27,13 +30,60 @@ export default function WorkoutsView() {
         const [bodyPartValue, setbodyPartValue] = useState('All Body Parts');
         const [bodyParts, setBodyParts] = useState([]);
 
+        function removeWorkout(id) {
+            const cookieValue = Cookies.get('JwtToken');
+            const requestOptions = {
+                method: 'DELETE',
+                headers: { Authorization: `Bearer ${cookieValue}` },
+            };
+            fetch(`/api/workouts/${id}`, requestOptions)
+                .then((response) => response.json())
+                .then((data) => {
+                    getWorkouts();
+                    setOpen(false);
+                    
+                });
+        }
+
         const handleAddNewWorkout = () => {
             setOpenNewWorkoutModal(true);
         };
-    
+        
+        const deleteWorkout = (id) => {
+            removeWorkout(id);
+            
+        }
+
         const handleSaveNewWorkout = () => {
             // Logic to save the new workout 
-            setOpenNewWorkoutModal(false);
+            console.log("hello")
+            console.log(newWorkout);
+            const Exercises = newWorkout.exercises.map(ob => {
+                const {id} = ob
+                return id
+            })
+            const newWorkoutObject = {Description: newWorkout.name,Exercises}
+
+            console.log(newWorkoutObject)
+
+         
+            const cookieValue = Cookies.get('JwtToken');
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${cookieValue}` },
+                body: JSON.stringify(newWorkoutObject)
+            };
+            
+            fetch('/api/workouts', requestOptions)
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                    getWorkouts();
+                    setOpenNewWorkoutModal(false);
+    
+                });
+            // onComplete();
+            // setOpenNewWorkoutModal(false);
         };
     
         const handleAddExerciseToNewWorkout = (exercise) => {
@@ -223,12 +273,19 @@ export default function WorkoutsView() {
                         />
                     ))} 
 
-                    <Stack pt={2}>
+                    <Stack pt={2} spacing={2}>
                         <Button
                             variant="outlined"
                             sx={{ justifyContent: 'left' }}
                         >
                             + Add Exercise
+                        </Button>
+                        <Button
+                            variant="contained"
+                            sx={{ justifyContent: 'left' }}
+                            onClick={handleSaveNewWorkout}
+                        >
+                            Save
                         </Button>
                     </Stack>
                 </Stack>
@@ -237,7 +294,7 @@ export default function WorkoutsView() {
             {/* Available Exercises Section */}
             <Paper sx={{ p: 2, height: '475px' }}>
                 <Stack sx={{ width: 350 }}>
-                    <MiniExerciseView sx={{ minHeight: 0 }} handleAddExercise={handleAddExerciseToNewWorkout} />
+                    <MiniExerciseView sx={{ minHeight: 0 }} handleAddExercise={handleAddExerciseToNewWorkout} isNewWorkout={true} />
                 </Stack>
             </Paper>
         </Stack>
@@ -260,10 +317,15 @@ export default function WorkoutsView() {
                                 ''
                             ) : (
                                 <>
-                                    <Typography variant="h4">
-                                        {selectedWorkout.description}
-                                    </Typography>
-                                    <Stack sx={{ width: 500 }} mt={2}>
+                                    <Stack direction="row" justifyContent='space-between'>
+                                        <Typography variant="h4">
+                                            {selectedWorkout.description} 
+                                        </Typography>
+                                        <IconButton onClick={() => deleteWorkout(selectedWorkout.id)}>
+                                            <FontAwesomeIcon icon={faTrash} size="xs" />
+                                        </IconButton>
+                                    </Stack>
+                                    <Stack sx={{ width: 500 }} mt={2} px={2}>
                                         {selectedWorkout.exercises.map((ex, i) => (
                                             <ExerciseItem
                                                 key={ex.id}
@@ -291,7 +353,7 @@ export default function WorkoutsView() {
                         </Paper>
                         <Paper sx={{ p: 2, height: '475px' }}>
                             <Stack sx={{ width: 350 }}>
-                                <MiniExerciseView sx={{ minHeight: 0 }} handleAddExercise={handleAddExercise} />
+                                <MiniExerciseView sx={{ minHeight: 0 }} handleAddExercise={handleAddExercise}  />
                             </Stack>
                         </Paper>
                     </Stack>

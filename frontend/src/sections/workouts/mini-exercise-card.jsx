@@ -16,7 +16,8 @@ import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-export default function MiniExerciseCard({ post, index,handleAddExercise }) {
+export default function MiniExerciseCard({ post, index,handleAddExercise,isNewWorkout }) {
+    console.log(isNewWorkout)
     const { title, name,id, view, comment, share, createdAt, videoUrl, cover, bodyPart } = post;
 
     const renderTitle = (
@@ -114,9 +115,19 @@ export default function MiniExerciseCard({ post, index,handleAddExercise }) {
                     {renderTitle}
                 </Box>
                 <Stack alignItems="center">
-                    <IconButton onClick={() => handleAddExercise(id)}>
-                        <FontAwesomeIcon icon={faCirclePlus} size="xs" />
-                    </IconButton>
+
+                    <>
+                    {isNewWorkout
+                    ?
+                        <IconButton onClick={() => handleAddExercise(post)}>
+                            <FontAwesomeIcon icon={faCirclePlus} size="xs" />
+                        </IconButton>
+                    :
+                        <IconButton onClick={() => handleAddExercise(id)}>
+                            <FontAwesomeIcon icon={faCirclePlus} size="xs" />
+                        </IconButton>
+                    }
+                    </>
                 </Stack>
             </Card>
         </Grid>
