@@ -29,7 +29,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://webapijobsearch.azurewebsites.net',
+        target: 'https://localhost:7031/',
         changeOrigin: true,
         secure: false
       }

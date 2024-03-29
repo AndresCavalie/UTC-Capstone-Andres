@@ -42,6 +42,10 @@ namespace WebApiJobSearch.Controllers
         public IActionResult newPatient(AddPatientDTO NewPatientInfo)
 
         {
+            var newUserLogin = new GetRiteLogin {
+                Username = NewPatientInfo.Username,
+                Password = NewPatientInfo.Password
+            };
             Console.WriteLine(NewPatientInfo);
             //var user = GetCurrentUser();
 
@@ -72,6 +76,7 @@ namespace WebApiJobSearch.Controllers
             
             newPatient.Address = newAddress;
             newUser.GetRitePatient = newPatient;
+            newUser.GetRiteLogin = newUserLogin;
             _context.GetRiteUsers.Add(newUser);
             _context.SaveChanges();
             //var NewAppointment = new GetRiteAppointment
