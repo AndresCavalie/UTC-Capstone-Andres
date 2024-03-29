@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApiJobSearch.Models;
+using System.Security.Claims;
+using WebApiJobSearch.CustomClaims;
 
 namespace WebApiJobSearch.Controllers
 {
@@ -30,7 +32,7 @@ namespace WebApiJobSearch.Controllers
             var workoutsQ = _context.GetRiteWorkouts
                     .Select(w => new { w.Id, w.Description, w.BodyPart, w.isDefault, w.Exercises, w.OfficeId })
                 .AsQueryable();
-            workoutsQ = workoutsQ.Where(w => w.OfficeId == officeId || w.isDefault == true);
+            workoutsQ = workoutsQ.Where(w => w.OfficeId == officeId);
 
 
             if (!string.IsNullOrEmpty(description))
@@ -89,6 +91,26 @@ namespace WebApiJobSearch.Controllers
             return Ok(new {workout= "" });
         }
 
+        [HttpPost]
+        public IActionResult newWorkout (GetRiteWorkoutDTO newWorkoutObject)
+
+        {   
+            var currentUser = GetCurrentUser();
+            var newWorkout = new GetRiteWorkout {
+                Description = newWorkoutObject.Description,
+                OfficeId = int.Parse(currentUser.OfficeId),
+                Exercises = new List<GetRiteExercise>()
+            };
+            
+            var ExercisesToAdd = _context.GetRiteExercises.Where(e => newWorkoutObject.Exercises.Contains(e.Id)).ToList();
+            
+            newWorkout.Exercises.AddRange(ExercisesToAdd);
+            _context.GetRiteWorkouts.Add(newWorkout);
+            _context.SaveChanges();
+
+            return Ok(new { response="hello"});
+        }
+
         [HttpPost("{Wid}/exercise/{Eid}")]
         public IActionResult Add(int Wid, int Eid)
         {
@@ -110,6 +132,22 @@ namespace WebApiJobSearch.Controllers
             _context.SaveChanges();
             return Ok(new { workout = "" });
         }
+        private JwtUserInfo GetCurrentUser()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            if (identity != null)
+            {
+                var userClaims = identity.Claims;
 
+                return new JwtUserInfo
+                {
+                    UserId = userClaims.FirstOrDefault(o => o.Type == CustomClaimTypes.UserId)?.Value,
+                    OfficeId = userClaims.FirstOrDefault(o => o.Type == CustomClaimTypes.OfficeId)?.Value,
+                    PhysicianId = userClaims.FirstOrDefault(o => o.Type == CustomClaimTypes.PhysicianId)?.Value,
+                    PatientId = userClaims.FirstOrDefault(o => o.Type == CustomClaimTypes.PatientId)?.Value,
+                };
+            }
+            return null;
+        }
     }
 }

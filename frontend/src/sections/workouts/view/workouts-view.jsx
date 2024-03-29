@@ -33,7 +33,32 @@ export default function WorkoutsView() {
     
         const handleSaveNewWorkout = () => {
             // Logic to save the new workout 
-            setOpenNewWorkoutModal(false);
+            console.log("hello")
+            console.log(newWorkout);
+            const Exercises = newWorkout.exercises.map(ob => {
+                const {id} = ob
+                return id
+            })
+            const newWorkoutObject = {Description: newWorkout.name,Exercises}
+
+            console.log(newWorkoutObject)
+
+         
+            const cookieValue = Cookies.get('JwtToken');
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${cookieValue}` },
+                body: JSON.stringify(newWorkoutObject)
+            };
+            
+            fetch('/api/workouts', requestOptions)
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+    
+                });
+            // onComplete();
+            // setOpenNewWorkoutModal(false);
         };
     
         const handleAddExerciseToNewWorkout = (exercise) => {
@@ -223,12 +248,19 @@ export default function WorkoutsView() {
                         />
                     ))} 
 
-                    <Stack pt={2}>
+                    <Stack pt={2} spacing={2}>
                         <Button
                             variant="outlined"
                             sx={{ justifyContent: 'left' }}
                         >
                             + Add Exercise
+                        </Button>
+                        <Button
+                            variant="contained"
+                            sx={{ justifyContent: 'left' }}
+                            onClick={handleSaveNewWorkout}
+                        >
+                            Save
                         </Button>
                     </Stack>
                 </Stack>
@@ -237,7 +269,7 @@ export default function WorkoutsView() {
             {/* Available Exercises Section */}
             <Paper sx={{ p: 2, height: '475px' }}>
                 <Stack sx={{ width: 350 }}>
-                    <MiniExerciseView sx={{ minHeight: 0 }} handleAddExercise={handleAddExerciseToNewWorkout} />
+                    <MiniExerciseView sx={{ minHeight: 0 }} handleAddExercise={handleAddExerciseToNewWorkout} isNewWorkout={true} />
                 </Stack>
             </Paper>
         </Stack>
@@ -291,7 +323,7 @@ export default function WorkoutsView() {
                         </Paper>
                         <Paper sx={{ p: 2, height: '475px' }}>
                             <Stack sx={{ width: 350 }}>
-                                <MiniExerciseView sx={{ minHeight: 0 }} handleAddExercise={handleAddExercise} />
+                                <MiniExerciseView sx={{ minHeight: 0 }} handleAddExercise={handleAddExercise}  />
                             </Stack>
                         </Paper>
                     </Stack>
