@@ -263,6 +263,8 @@ function PatientForm({ onComplete }) {
         ZipCode: '',
         Country: '',
         MedicalHistoryNotes:'',
+        Username:'',
+        Password:'',
     })
 
     const states = [
@@ -335,6 +337,7 @@ function PatientForm({ onComplete }) {
                 console.log(data);
 
             });
+        onComplete();
     };
 
     const handleSubmit = (event) => {
@@ -349,6 +352,14 @@ function PatientForm({ onComplete }) {
 
     return (
         <Container>
+            <Button
+                    variant="contained"
+                    color="inherit"
+                    startIcon={<Iconify icon="eva:arrow-back-fill" />}
+                    onClick={() => onComplete()}
+                >
+                    Complete
+                </Button>
             <h1>New Patient Form</h1>
                 <TextField
                     label="First Name"
@@ -464,6 +475,22 @@ function PatientForm({ onComplete }) {
                     rows={4}
                     value={newPatientForm.MedicalHistoryNotes}
                     onChange={(e) => setNewPatientForm({...newPatientForm, MedicalHistoryNotes: e.target.value})}
+                />
+                <TextField
+                    label="Username"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={newPatientForm.Username}
+                    onChange={(e) => setNewPatientForm({...newPatientForm, Username: e.target.value})}
+                />
+                <TextField
+                    label="Password"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={newPatientForm.Password}
+                    onChange={(e) => setNewPatientForm({...newPatientForm, Password: e.target.value})}
                 />
                 <Button
                     variant="contained"
