@@ -38,10 +38,30 @@ export default function AppView() {
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);
+                setOpen(false);
                 setCalendarEvents(data);
             });
     };
-
+    function removeAppointment(id) {
+        const cookieValue = Cookies.get('JwtToken');
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { Authorization: `Bearer ${cookieValue}` },
+        };
+        fetch(`/api/appointments/${id}`, requestOptions)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                logInAttempt();
+                // getWorkouts();
+                // setOpen(false);
+                
+            });
+    }
+    function deleteAppointment(id){
+        console.log(id);
+        removeAppointment(id);
+    }
     useEffect(() => {
         logInAttempt();
     }, []);
@@ -351,7 +371,7 @@ const handleSelected = (event) => {
                 </Grid>
             </Grid>
             <Modal open={open} onClose={handleClose}>
-                <ViewAppointment selectedAppointment={selectedAppointment}/>
+                <ViewAppointment selectedAppointment={selectedAppointment} deleteAppointment={deleteAppointment}/>
             </Modal>
         </Container>
     );

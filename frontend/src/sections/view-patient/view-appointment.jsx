@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faTimes, faCircleMinus, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faTimes, faCircleMinus, faEdit, faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
@@ -30,7 +30,7 @@ import {
 import { primary } from 'src/theme/palette';
 import MiniExerciseView from '../workouts/mini-exercise-view';
 
-export default function ViewAppointment({selectedAppointment}){
+export default function ViewAppointment({selectedAppointment,deleteAppointment}){
     const [noteContent, setNoteContent] = useState("");
     const [editingNoteId, setEditingNoteId] = useState(null);
     const [editedNotes, setEditedNotes] = useState({}); 
@@ -54,15 +54,20 @@ export default function ViewAppointment({selectedAppointment}){
                                 ''
                             ) : (
                                 <>
-                                    <Typography variant="h5">
-                                        {selectedAppointment.appointmentTime
-                                            ?.toLocaleString('en-US', {
-                                                year: 'numeric',
-                                                month: '2-digit',
-                                                day: '2-digit',
-                                            })
-                                            .replace(/\//g, '-')}
-                                    </Typography>
+                                    <Stack direction="row" justifyContent="space-between">
+                                        <Typography variant="h5">
+                                            {selectedAppointment.appointmentTime
+                                                ?.toLocaleString('en-US', {
+                                                    year: 'numeric',
+                                                    month: '2-digit',
+                                                    day: '2-digit',
+                                                })
+                                                .replace(/\//g, '-')}
+                                        </Typography>
+                                        <IconButton onClick={() => deleteAppointment(selectedAppointment.id)}>
+                                            <FontAwesomeIcon icon={faTrash} size="xs" />
+                                        </IconButton>
+                                    </Stack>
                                    <Box mt={2}>
                                         <Box display="flex" alignItems="center">
                                             <Typography variant="h6">Notes from session</Typography>
