@@ -34,7 +34,7 @@ const navConfig = [
     },
     {
         title: 'purchase',
-        path: '/purchase',
+        path: 'https://www.optp.com/?gad_source=1&gclid=CjwKCAjwz42xBhB9EiwA48pT78hvw3F1WhnGmQ4qUUm5UXvQIsSPDBEsdoJoH68VsjdSc8RpczvAAhoCwywQAvD_BwE',
         icon: icon('ic_cart'),
     },
     // below are original items
@@ -43,11 +43,11 @@ const navConfig = [
     //     path: '/',
     //     icon: icon('ic_disabled'),
     // },
-    {
-        title: 'new appointment',
-        path: '/new-appointment',
-        icon: icon('ic_cart'),
-    },
+    // {
+    //     title: 'new appointment',
+    //     path: '/new-appointment',
+    //     icon: icon('ic_cart'),
+    // },
     {
         title: 'settings',
         path: '/settings',
