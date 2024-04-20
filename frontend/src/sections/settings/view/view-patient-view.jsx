@@ -90,7 +90,6 @@ export default function SettingsView() {
                         aria-label="basic tabs example"
                     >
                         <Tab label="Office Settings" />
-                        <Tab label="User Settings" />
                     </Tabs>
                     <Divider sx={{ mb: 2 }} />
                     <Grid container spacing={2}>
