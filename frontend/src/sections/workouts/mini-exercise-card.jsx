@@ -41,7 +41,7 @@ export default function MiniExerciseCard({ post, index,handleAddExercise,isNewWo
         <Box
             component="img"
             alt={title}
-            src="/assets/images/exercises/exercise_16.jpg"
+            src={`/assets/images/exercises/exercise_${id+1}.jpg`}
             sx={{
                 top: 0,
                 width: 1,

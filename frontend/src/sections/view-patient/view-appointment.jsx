@@ -211,7 +211,7 @@ export default function ViewAppointment({selectedAppointment,deleteAppointment})
                                                                                     alt={
                                                                                         ex.getRiteExerciseId
                                                                                     }
-                                                                                    src="/assets/images/exercises/exercise_16.jpg"
+                                                                                    src={`/assets/images/exercises/exercise_${getRiteExerciseId+1}.jpg`}
                                                                                     sx={{
                                                                                         objectFit:
                                                                                             'cover',

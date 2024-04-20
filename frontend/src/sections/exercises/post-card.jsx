@@ -37,7 +37,7 @@ export default function PostCard({ post, index }) {
         <Box
             component="img"
             alt={name}
-            src="/assets/images/exercises/exercise_2.jpg"
+            src={`/assets/images/exercises/exercise_${post.id}.jpg`}
             sx={{
                 top: 0,
                 width: 1,

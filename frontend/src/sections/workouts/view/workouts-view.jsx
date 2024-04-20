@@ -266,7 +266,7 @@ export default function WorkoutsView() {
                                                 post={{
                                                     name: ex.name,
                                                     id: ex.id,
-                                                    cover: '/assets/images/exercises/exercise_16.jpg',
+                                                    cover: `/assets/images/exercises/exercise_${ex.id+1}.jpg`,
                                                 }}
                             isExpanded={selectedWorkout.isDefault ? false: true}
                             onRemoveExercise={() => handleRemoveExerciseFromNewWorkout(ex.id)}
@@ -332,7 +332,7 @@ export default function WorkoutsView() {
                                                 post={{
                                                     name: ex.name,
                                                     id: ex.id,
-                                                    cover: '/assets/images/exercises/exercise_16.jpg',
+                                                    cover: `/assets/images/exercises/exercise_${ex.id+1}.jpg`,
                                                 }}
                                                 isExpanded={selectedWorkout.isDefault ? false: true}
                                                 onRemoveExercise = {handleRemoveExercise}

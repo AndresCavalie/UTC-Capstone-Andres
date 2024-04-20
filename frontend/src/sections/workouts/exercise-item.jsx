@@ -29,7 +29,7 @@ export default function ExerciseItem({ post, isExpanded, onRemoveExercise }) {
                         <Box
                             component="img"
                             alt={name}
-                            src={cover || '/assets/images/exercises/exercise_16.jpg'}
+                            src={cover || `/assets/images/exercises/exercise_${post.id+1}.jpg`}
                             sx={{
                                 objectFit: 'cover',
                                 display: 'inline',
