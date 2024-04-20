@@ -55,32 +55,32 @@ export default function Nav({ openNav, onCloseNav }) {
         getUser();
     }, []);
 
-    const renderAccount = (
-        <Box
-            sx={{
-                my: 3,
-                mx: 2.5,
-                py: 2,
-                px: 2.5,
-                display: 'flex',
-                borderRadius: '16px',
-                alignItems: 'center',
-                bgcolor: (theme) => theme.palette.navbar.darkSecondary,
-            }}
-        >
-            <Avatar src={account.photoURL} alt="photoURL" />
+    // const renderAccount = (
+    //     <Box
+    //         sx={{
+    //             my: 3,
+    //             mx: 2.5,
+    //             py: 2,
+    //             px: 2.5,
+    //             display: 'flex',
+    //             borderRadius: '16px',
+    //             alignItems: 'center',
+    //             bgcolor: (theme) => theme.palette.navbar.darkSecondary,
+    //         }}
+    //     >
+    //         <Avatar src={account.photoURL} alt="photoURL" />
 
-            <Box sx={{ ml: 2 }}>
-                <Typography variant="subtitle2">
-                    {userData.firstName} {userData.lastName}
-                </Typography>
+    //         <Box sx={{ ml: 2 }}>
+    //             <Typography variant="subtitle2">
+    //                 {userData.firstName} {userData.lastName}
+    //             </Typography>
 
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    {account.role}
-                </Typography>
-            </Box>
-        </Box>
-    );
+    //             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+    //                 {account.role}
+    //             </Typography>
+    //         </Box>
+    //     </Box>
+    // );
 
     const renderMenu = (
         <Stack component="nav" spacing={0.5} sx={{ px: 2 }}>
@@ -103,7 +103,7 @@ export default function Nav({ openNav, onCloseNav }) {
         >
             <Logo sx={{ mt: 3, ml: 4 }} />
 
-            {renderAccount}
+            {/* {renderAccount} */}
 
             {renderMenu}
 
