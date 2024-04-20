@@ -73,9 +73,10 @@ export default function ViewPatientView() {
                 });
                 console.log(data);
                 setAppointments(data);
+                setOpen(false);
             });
     }
-
+    
     function getAppointmentById(id) {
         const cookieValue = Cookies.get('JwtToken');
         const requestOptions = {
@@ -91,7 +92,28 @@ export default function ViewPatientView() {
                 setSelectedAppointment(data[0]);
             });
     }
-
+    
+    function removeAppointment(id) {
+        const cookieValue = Cookies.get('JwtToken');
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { Authorization: `Bearer ${cookieValue}` },
+        };
+        fetch(`/api/appointments/${id}`, requestOptions)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                getAppointments()
+                // getWorkouts();
+                // setOpen(false);
+                
+            });
+    }
+    function deleteAppointment(id) {
+        console.log(id)
+        removeAppointment(id)
+        
+    }
     function getPatientInfo() {
         const cookieValue = Cookies.get('JwtToken');
         const requestOptions = {
@@ -127,7 +149,11 @@ export default function ViewPatientView() {
     const fontColor = {
         style: { color: 'rgb(100, 0, 0)' },
     };
-
+    function resetState(){
+        setOpen(false);
+        setNewAppointmentOpen(false);
+        getAppointments();
+    }
     const StatusText = ({ time }) => {
         let futureTime = new Date(time);
         futureTime.setMinutes(futureTime.getMinutes() + 30);
@@ -422,8 +448,8 @@ export default function ViewPatientView() {
             {/* Notecard view on click */}
             {/* need this card to be a bit wider */}
             <Modal open={open} onClose={handleClose}>
-                {newAppointmentOpen ? (<NewAppointmentModal />) : (
-                    <ViewAppointment selectedAppointment={selectedAppointment}/>
+                {newAppointmentOpen ? (<NewAppointmentModal resetState={resetState}/>) : (
+                    <ViewAppointment selectedAppointment={selectedAppointment} deleteAppointment={deleteAppointment}/>
                 )}
             </Modal>
 

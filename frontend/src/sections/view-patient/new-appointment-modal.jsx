@@ -33,7 +33,7 @@ import { DatePicker, LocalizationProvider, TimePicker } from '@mui/x-date-picker
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { VisuallyHiddenInput } from '@chakra-ui/react';
 
-export default function NewAppointmentModal() {
+export default function NewAppointmentModal({resetState}) {
     const { id } = useParams();
     const handleFileUpload = (e) => {
         
@@ -75,7 +75,7 @@ export default function NewAppointmentModal() {
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);
-
+                resetState();
             });
     };
     return (
